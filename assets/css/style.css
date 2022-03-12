@@ -22,3 +22,11 @@ input{
 button{
     height: 47px;
 }
+
+#result-5Day h3{
+    height: fit-content;
+}
+
+#result-5Day div{
+    height: 100%;
+}
