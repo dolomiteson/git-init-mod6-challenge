@@ -24,15 +24,32 @@
     </header>
     <div class="container-fluid">
       <div class="row">
-        <aside class="col-3 bg-danger views" id="sidebar">
+        <aside class="col-3 views" id="sidebar">
           <section class="row p-2 border-bottom border-dark h-25" id="search-city">
             <h2 class="w-100">Search for City:</h2>
-            <input type="text" class="w-100" id="input-city">
-            <button type="button" class="w-100">Search</button>
+            <input type="text" class="w-100 h-25" id="input-city" placeholder="City">
+            <button type="button" class="w-100 bg-primary">Search</button>
           </section>
-          <section class="row" id="city-results"></section>
+          <section class="row p-2" id="city-results">
+            <button type="button" class="w-100 bg-secondary my-2">Search</button>
+            <button type="button" class="w-100 bg-secondary my-2">Search</button>
+            <button type="button" class="w-100 bg-secondary my-2">Search</button>
+            <button type="button" class="w-100 bg-secondary my-2">Search</button>
+            <button type="button" class="w-100 bg-secondary my-2">Search</button>
+            <button type="button" class="w-100 bg-secondary my-2">Search</button>
+            <button type="button" class="w-100 bg-secondary my-2">Search</button>
+            <button type="button" class="w-100 bg-secondary my-2">Search</button>
+            <button type="button" class="w-100 bg-secondary my-2">Search</button>
+            <button type="button" class="w-100 bg-secondary my-2">Search</button>
+          </section>
         </aside>
-        <section class="col-9 bg-dark views"></section>
+        <section class="col-9 bg-dark views">
+          <section id="result-current" class="row"></section>
+          <section id="result-5Day" class="row">
+            <h3 class="row"></h3>
+            <div class="row" id="5Day-results"></div>
+          </section>
+        </section>
       </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

@@ -1,11 +1,24 @@
+/* Body Styling */
 html, body{
     height: 100%;
 }
 
+/* Header Styling */
 header{
     background-image: linear-gradient(to right, blue, darkblue);
 }
 
+/* Views Styling */
 .views{
     height: 93vh;
+}
+
+/* Input Styling */
+input{
+    font-size: x-large;
+}
+
+/* Button Styling */
+button{
+    height: 47px;
 }
