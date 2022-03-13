@@ -23,6 +23,13 @@ button{
     height: 47px;
 }
 
+#result-current div{
+    background-color: red;
+    min-width: 95%;
+    max-height: 95%;
+    margin: 0 auto;
+}
+
 #result-5Day h3{
     height: fit-content;
 }
