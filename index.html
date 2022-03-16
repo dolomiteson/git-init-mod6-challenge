@@ -28,7 +28,7 @@
           <section class="row p-2 border-bottom border-dark h-25" id="search-city">
             <h2 class="w-100">Search for City:</h2>
             <input type="text" class="w-100 h-25" id="input-city" placeholder="Input City">
-            <select class="browser-default custom-select">
+            <select class="browser-default custom-select" id="select-state">
               <option selected="">Select State</option>
               <option>Alabama</option>
               <option>Alaska</option>
@@ -82,7 +82,7 @@
               <option>Wisconsin</option>
               <option>Wyoming</option>
             </select>
-            <button type="button" class="w-100 bg-primary">Search</button>
+            <button type="button" class="w-100 bg-primary" onclick="getCityInfo()">Search</button>
           </section>
           <section class="row p-2" id="city-results"></section>
         </aside>

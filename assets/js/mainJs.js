@@ -12,7 +12,11 @@ var weatherInfo = 'https://api.openweathermap.org/data/2.5/onecall?lat=39.799017
 /* City Data Funtionality */
 
 // Function to build getCityInfo request
-async function getCityInfo(cityVal, stateVal){
+async function getCityInfo(){
+  // Get City AND State values
+  var cityVal = $("#input-city").val();
+  var stateVal = $("#select-state option:selected").text();
+  
   getCityUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityVal + ',' + stateVal + ',US&appid=' + API_KEY;
 
   const response = await fetch(getCityUrl);
@@ -42,8 +46,18 @@ async function getCityInfo(cityVal, stateVal){
 
 // Function that displays cities stored in local storage
 function createCityButtons(){
+  // $("#city-results").remove();
+
+  // var cities = JSON.parse(localStorage.getItem(CITY_STORE)) ?? [];
+  // if(cities.length === 0){return}
+  // else{
+  //   for(var index = 0; index < cities.length; index++){
+  //     var button = 
+
+  //   }
+  // }
+
+
   // Example of format will be: <button type="button" class="w-100 bg-secondary my-2">Search</button>
 }
-
-getCityInfo("Virginia Beach", "Virginia");
 
