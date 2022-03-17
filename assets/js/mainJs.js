@@ -13,16 +13,19 @@ var weatherInfo = 'https://api.openweathermap.org/data/2.5/onecall?lat=39.799017
 
 // Function to build getCityInfo request
 async function getCityInfo(){
-  // Get City AND State values
+  // Get City and State values
   var cityVal = $("#input-city").val();
   var stateVal = $("#select-state option:selected").text();
   
+  // Create URL
   getCityUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityVal + ',' + stateVal + ',US&appid=' + API_KEY;
 
+  // Fetch API data
   const response = await fetch(getCityUrl);
   const data = await response.json();
   const {name, state, lat, lon} = data[0];
 
+  // Local Storage
   var cities = JSON.parse(localStorage.getItem(CITY_STORE)) ?? [];
 
   // Remove any old records to be replaced
@@ -42,22 +45,32 @@ async function getCityInfo(){
 
   // Set local storage
   localStorage.setItem(CITY_STORE, JSON.stringify(cities));
+  createCityButtons();
 }
 
 // Function that displays cities stored in local storage
 function createCityButtons(){
-  // $("#city-results").remove();
 
-  // var cities = JSON.parse(localStorage.getItem(CITY_STORE)) ?? [];
-  // if(cities.length === 0){return}
-  // else{
-  //   for(var index = 0; index < cities.length; index++){
-  //     var button = 
-
-  //   }
-  // }
+  var cities = JSON.parse(localStorage.getItem(CITY_STORE)) ?? [];
+  if(cities.length === 0){
+    return;
+  }
+  else{
+    for(var index = 0; index < cities.length; index++){
+      var button = $("<button>")
+      .text(cities[index].name)
+      .attr("type", "button")
+      .attr("class", "w-100 bg-secondary my-2 text-white")
+      .attr("onclick", "getWeather()");
+      $("#city-results").append(button);
+    }
+  }
+  
 
 
   // Example of format will be: <button type="button" class="w-100 bg-secondary my-2">Search</button>
 }
+
+/* Weather Funtionality */
+function getWeather(){}
 

@@ -25,10 +25,10 @@
     <div class="container-fluid">
       <div class="row">
         <aside class="col-3 views" id="sidebar">
-          <section class="row p-2 border-bottom border-dark h-25" id="search-city">
+          <section class="row p-2 border-bottom border-dark" id="search-city">
             <h2 class="w-100">Search for City:</h2>
-            <input type="text" class="w-100 h-25" id="input-city" placeholder="Input City">
-            <select class="browser-default custom-select" id="select-state">
+            <input type="text" class="w-100 h-25 mb-1" id="input-city" placeholder="Input City">
+            <select class="browser-default custom-select mb-1" id="select-state">
               <option selected="">Select State</option>
               <option>Alabama</option>
               <option>Alaska</option>
@@ -82,7 +82,7 @@
               <option>Wisconsin</option>
               <option>Wyoming</option>
             </select>
-            <button type="button" class="w-100 bg-primary" onclick="getCityInfo()">Search</button>
+            <button type="button" class="w-100 bg-primary mb-1" onclick="getCityInfo()">Search</button>
           </section>
           <section class="row p-2" id="city-results"></section>
         </aside>
