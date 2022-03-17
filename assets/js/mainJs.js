@@ -2,11 +2,12 @@
 const API_KEY = '9bb87156295234b5818a2a3fbabeb8d1'; 
 const CITY_STORE = 'cityStore'
 
-// City Infor variables
+// City Info variables
 var getCityUrl = '';
 var cityInfo = '';
 
-var weatherInfo = 'https://api.openweathermap.org/data/2.5/onecall?lat=39.7990175&lon=-89.6439575&exclude=minutely,hourly&appid=' + API_KEY;
+// City Weather variables
+var weatherInfoUrl = '';
 
 
 /* City Data Funtionality */
@@ -61,7 +62,8 @@ function createCityButtons(){
       .text(cities[index].name)
       .attr("type", "button")
       .attr("class", "w-100 bg-secondary my-2 text-white")
-      .attr("onclick", "getWeather()");
+      .attr("onclick", "getWeatherInfo(this)")
+      .attr("value", cities[index].state);
       $("#city-results").append(button);
     }
   }
@@ -72,5 +74,47 @@ function createCityButtons(){
 }
 
 /* Weather Funtionality */
-function getWeather(){}
 
+// Function to retrieve weather from API and present in htnl
+async function getWeatherInfo(element){
+  // Coordinance Variables
+  var lat = '';
+  var lon = '';
+
+  // Get City and State values
+  var city = $(element).text();
+  var state = $(element).val();
+
+  // Local Storage
+  var cities = JSON.parse(localStorage.getItem(CITY_STORE)) ?? [];  
+  
+  // Get lat and lon values
+  for(var index = 0; index < cities.length; index++){
+    if(cities[index].name === city && cities[index].state === state){
+        lat = cities[index].lat;
+        lon = cities[index].lon;
+    }
+  }
+  
+  // Create URL
+  weatherInfoUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&units=imperial&exclude=minutely,hourly&appid=' + API_KEY;
+
+  // Fetch API data
+  const response = await fetch(weatherInfoUrl);
+  const data = await response.json();
+  //const {name, state, lat, lon} = data[0];
+  console.log(data);
+}
+
+  
+
+  
+
+
+/* MAIN */
+
+createCityButtons();
+// $(document).ready(function(){
+  
+//   //setInterval(imTasking , 3600000);
+// });
