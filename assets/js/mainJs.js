@@ -17,7 +17,12 @@ async function getCityInfo(){
   // Get City and State values
   var cityVal = $("#input-city").val();
   var stateVal = $("#select-state option:selected").text();
-  
+
+  if(cityVal === "" || stateVal == "Select State"){
+    alert("You must input a city and select a state to continue");
+    return;
+  }
+
   // Create URL
   getCityUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityVal + ',' + stateVal + ',US&appid=' + API_KEY;
 
@@ -31,12 +36,13 @@ async function getCityInfo(){
 
   // Remove any old records to be replaced
   for(var index = 0; index < cities.length; index++){
+    cities[index].selected = false;
     if(cities[index].name === name && cities[index].state === state){
         cities.splice(index, 1);
     }
   }
 
-  cities.push({name, state, lat, lon});
+  cities.push({selected: true, name, state, lat, lon});
 
   cities.sort(function(a, b){
     var textA = a.name.toUpperCase();
@@ -51,7 +57,7 @@ async function getCityInfo(){
 
 // Function that displays cities stored in local storage
 function createCityButtons(){
-
+  $("#city-results").empty();
   var cities = JSON.parse(localStorage.getItem(CITY_STORE)) ?? [];
   if(cities.length === 0){
     return;
@@ -106,15 +112,10 @@ async function getWeatherInfo(element){
   console.log(data);
 }
 
-  
-
-  
-
-
 /* MAIN */
 
 createCityButtons();
 // $(document).ready(function(){
   
-//   //setInterval(imTasking , 3600000);
+//   setInterval( , 1000);
 // });
