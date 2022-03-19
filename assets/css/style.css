@@ -36,3 +36,7 @@ button{
 #result-5Day div{
     height: 100%;
 }
+
+#fiveDay-results div{
+    background-color: #00003E;
+}

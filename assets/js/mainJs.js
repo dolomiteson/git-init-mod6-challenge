@@ -111,22 +111,48 @@ async function getWeatherInfo(){
   const response = await fetch(weatherInfoUrl);
   const data = await response.json();
 
+  // Icon for current day
+  var currentIcon = data.current.weather[0].icon;
+  var currentSrc = "http://openweathermap.org/img/w/" + currentIcon + ".png";
+  var icon = $("<img>")
+  .attr("src", currentSrc);
+  
   // Current Weather
   $("#current-city").text(thisCity.name + ", " + thisCity.state);
+  $("#current-city").append(icon);
   var currDate = new Date(data.current.dt * 1000);
-  $("#current-date-icon").text(currDate.toLocaleString('en-US').split(',')[0]);
+  $("#current-date").text(currDate.toLocaleString('en-US').split(',')[0]);
   $("#current-temp").text("Temp: " + Math.floor(data.current.temp) + "°F");
   $("#current-wind").text("Wind: " + Math.floor(data.current.wind_speed) + " MPH");
   $("#current-humidity").text("Humidity: " + data.current.humidity + " %");
-  $("#current-uvi").text("UV Index: " + data.current.uvi);
+
+  var uvi = data.current.uvi;
+  var uviColor = "";
+  if(uvi < 3){
+    uviColor = "#00FF00";
+  }
+  else if(uvi > 2 && uvi < 6){
+    uviColor = "#FF7F00";
+  }
+  else if(uci > 5 && uvi < 8){
+    uviColor = "#FF0000";
+  }
+  else{uviColor = "#7F00FF";}
+
+  var uviInd = $("<span>")
+  .css("background-color", uviColor)
+  .text(uvi);
+
+  $("#current-uvi").text("UV Index: ");
+  $("#current-uvi").append(uviInd);
 
   // 5-Day Weather
-  $("#5Day-results").empty();
+  $("#fiveDay-results").empty();
   for(var index = 1; index <= 5; index++){
     // Div containers for each day
     var day = $("<div>")
-    .attr("class", "col h-75 m-1 bg-dark");
-    $("#5Day-results").append(day);
+    .attr("class", "col h-75 m-1");
+    $("#fiveDay-results").append(day);
 
     // Data for each day
     var thisDate = new Date(data.daily[index].dt * 1000)
@@ -134,6 +160,13 @@ async function getWeatherInfo(){
     .attr("class", "row-12 text-white")
     .text(thisDate.toLocaleString('en-US').split(',')[0]);
     $(day).append(date);
+
+    // Icon for each day
+    var thisIcon = data.daily[index].weather[0].icon;
+    var thisSrc = "http://openweathermap.org/img/w/" + thisIcon + ".png";
+    var icon = $("<img>")
+    .attr("src", thisSrc);
+    $(day).append(icon);
 
     // Temp for each day
     var temp = $("<p>")
@@ -153,7 +186,6 @@ async function getWeatherInfo(){
     .text("Humidity: " + data.daily[index].humidity + " %");
     $(day).append(humidity);
   }
-  console.log(data);
 }
 
 /* MAIN */
