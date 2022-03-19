@@ -13,16 +13,25 @@ var weatherInfoUrl = '';
 /* City Data Funtionality */
 
 // Function to build getCityInfo request
-async function getCityInfo(){
-  // Get City and State values
-  var cityVal = $("#input-city").val();
-  var stateVal = $("#select-state option:selected").text();
+async function getCityInfo(element){
+  var cityVal = "";
+  var stateVal = "";
 
-  if(cityVal === "" || stateVal == "Select State"){
-    alert("You must input a city and select a state to continue");
-    return;
+  // Get info from either input and dropdown OR city button based on element
+  if($(element).text() === "Search"){
+    // Get City and State values
+    cityVal = $("#input-city").val();
+    stateVal = $("#select-state option:selected").text();
+
+    if(cityVal === "" || stateVal == "Select State"){
+      alert("You must input a city and select a state to continue");
+      return;
+    }
   }
-
+  else{
+    cityVal = $(element).text();
+    stateVal = $(element).val();
+  }
   // Create URL
   getCityUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityVal + ',' + stateVal + ',US&appid=' + API_KEY;
 
@@ -30,19 +39,23 @@ async function getCityInfo(){
   const response = await fetch(getCityUrl);
   const data = await response.json();
   const {name, state, lat, lon} = data[0];
+  var isExisting = false;
 
   // Local Storage
   var cities = JSON.parse(localStorage.getItem(CITY_STORE)) ?? [];
 
   // Remove any old records to be replaced
   for(var index = 0; index < cities.length; index++){
-    cities[index].selected = false;
     if(cities[index].name === name && cities[index].state === state){
-        cities.splice(index, 1);
+      cities[index].selected = true;
+      isExisting = true
     }
+    else{cities[index].selected = false;}
   }
 
-  cities.push({selected: true, name, state, lat, lon});
+  if(isExisting === false){
+    cities.push({selected: true, name, state, lat, lon});
+  }
 
   cities.sort(function(a, b){
     var textA = a.name.toUpperCase();
@@ -68,54 +81,44 @@ function createCityButtons(){
       .text(cities[index].name)
       .attr("type", "button")
       .attr("class", "w-100 bg-secondary my-2 text-white")
-      .attr("onclick", "getWeatherInfo(this)")
+      .attr("onclick", "getCityInfo(this)")
       .attr("value", cities[index].state);
       $("#city-results").append(button);
     }
   }
-  
-
-
-  // Example of format will be: <button type="button" class="w-100 bg-secondary my-2">Search</button>
 }
 
 /* Weather Funtionality */
 
 // Function to retrieve weather from API and present in htnl
-async function getWeatherInfo(element){
-  // Coordinance Variables
-  var lat = '';
-  var lon = '';
+// async function getWeatherInfo(element){
+//   // Coordinance Variables
+//   var lat = '';
+//   var lon = '';
 
-  // Get City and State values
-  var city = $(element).text();
-  var state = $(element).val();
+//   // Get City and State values
+//   var name = $(element).text();
+//   var state = $(element).val();
 
-  // Local Storage
-  var cities = JSON.parse(localStorage.getItem(CITY_STORE)) ?? [];  
+//   // Local Storage
+//   var cities = JSON.parse(localStorage.getItem(CITY_STORE)) ?? [];  
   
-  // Get lat and lon values
-  for(var index = 0; index < cities.length; index++){
-    if(cities[index].name === city && cities[index].state === state){
-        lat = cities[index].lat;
-        lon = cities[index].lon;
-    }
-  }
+//   // Get lat and lon values
+//   for(var index = 0; index < cities.length; index++){
+//     if(cities[index].name === name && cities[index].state === state){
+//         lat = cities[index].lat;
+//         lon = cities[index].lon;
+//     }
+//   }
   
-  // Create URL
-  weatherInfoUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&units=imperial&exclude=minutely,hourly&appid=' + API_KEY;
-
-  // Fetch API data
-  const response = await fetch(weatherInfoUrl);
-  const data = await response.json();
-  //const {name, state, lat, lon} = data[0];
-  console.log(data);
-}
+//   //                                                                                                                                                                                           
+// }
 
 /* MAIN */
 
-createCityButtons();
+//createCityButtons();
 // $(document).ready(function(){
-  
+//localStorage.clear();
+createCityButtons();
 //   setInterval( , 1000);
 // });
