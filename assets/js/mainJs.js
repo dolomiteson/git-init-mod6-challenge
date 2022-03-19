@@ -109,7 +109,17 @@ async function getWeatherInfo(element){
   // Fetch API data
   const response = await fetch(weatherInfoUrl);
   const data = await response.json();
-  //const {name, state, lat, lon} = data[0];
+
+  // Current Weather
+  $("#current-city").text(thisCity.name + ", " + thisCity.state);
+  var currDate = new Date(data.current.dt * 1000);
+  $("#current-date-icon").text(currDate.toLocaleString('en-US')).append(thisIcon);
+  $("#current-temp").text("Temp: " + Math.floor(data.current.temp) + "°F");
+  $("#current-wind").text("Wind: " + Math.floor(data.current.wind_speed) + " MPH");
+  $("#current-humidity").text("Humidity: " + data.current.humidity + " %");
+  $("#current-uvi").text("UV Index: " + data.current.uvi);
+
+  // 5-Day Weather
   console.log(data);
 }
 
@@ -120,5 +130,5 @@ async function getWeatherInfo(element){
 //localStorage.clear();
 createCityButtons();
 getWeatherInfo();
-//   setInterval( , 1000);
+setInterval( getWeatherInfo, 900000);
 // });
