@@ -33,7 +33,7 @@ async function getCityInfo(element){
     stateVal = $(element).val();
   }
   // Create URL
-  getCityUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityVal + ',' + stateVal + ',US&appid=' + API_KEY;
+  getCityUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + cityVal + ',' + stateVal + ',US&appid=' + API_KEY;
 
   // Fetch API data
   const response = await fetch(getCityUrl);
