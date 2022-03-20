@@ -109,16 +109,16 @@ async function getWeatherInfo(){
     
     // Create URL
     weatherInfoUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + thisCity.lat + '&lon=' + thisCity.lon + '&units=imperial&exclude=minutely,hourly&appid=' + API_KEY;
-
     // Fetch API data
     const response = await fetch(weatherInfoUrl);
     const data = await response.json();
-
     // Icon for current day
     var currentIcon = data.current.weather[0].icon;
     var currentSrc = "https://openweathermap.org/img/w/" + currentIcon + ".png";
+    var currentAlt = data.current.weather[0].description;
     var icon = $("<img>")
-    .attr("src", currentSrc);
+    .attr("src", currentSrc)
+    .attr("alt", currentAlt + " icon");
     
     // Current Weather
     $("#current-city").text(thisCity.name + ", " + thisCity.state);
@@ -167,8 +167,11 @@ async function getWeatherInfo(){
       // Icon for each day
       var thisIcon = data.daily[index].weather[0].icon;
       var thisSrc = "https://openweathermap.org/img/w/" + thisIcon + ".png";
+      var thisAlt = data.daily[index].weather[0].description;
       var icon = $("<img>")
-      .attr("src", thisSrc);
+      .attr("src", thisSrc)
+      .attr("alt", thisAlt + " icon");
+      
       $(day).append(icon);
 
       // Temp for each day
