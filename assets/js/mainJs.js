@@ -166,7 +166,7 @@ async function getWeatherInfo(){
 
       // Icon for each day
       var thisIcon = data.daily[index].weather[0].icon;
-      var thisSrc = "http://openweathermap.org/img/w/" + thisIcon + ".png";
+      var thisSrc = "https://openweathermap.org/img/w/" + thisIcon + ".png";
       var icon = $("<img>")
       .attr("src", thisSrc);
       $(day).append(icon);
