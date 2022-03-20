@@ -113,7 +113,7 @@ async function getWeatherInfo(){
 
   // Icon for current day
   var currentIcon = data.current.weather[0].icon;
-  var currentSrc = "http://openweathermap.org/img/w/" + currentIcon + ".png";
+  var currentSrc = "https://openweathermap.org/img/w/" + currentIcon + ".png";
   var icon = $("<img>")
   .attr("src", currentSrc);
   
